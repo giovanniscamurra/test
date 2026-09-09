@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricerca Domande Inglese</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#search {
+    width: 95%;
+    padding: 12px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.result {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+.question {
+    font-weight: bold;
+    color: #174ea6;
+    margin-bottom: 8px;
+}
+
+.answer {
+    color: #333;
+}
+
+.count {
+    margin-bottom: 15px;
+    color: #666;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Ricerca Domande Inglese</h1>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Cerca una parola nella domanda...">
+
+    <div class="count" id="count"></div>
+
+    <div id="results"></div>
+</div>
+
+<script>
+
+// INCOLLA QUI IL JSON COMPLETO
+const questionsData = {
+    "title": "L41 - Statistica e Big Data",
+    "questions": [
+      {
+        "id": 1,
+        "question": "A lot of ha:",
+        "answer": "Un uso più ampio rispetto a many"
+      },
+      {
+        "id": 2,
+        "question": "Il paradigma di un verbo irregolare:",
+        "answer": "È sempre composto da tre elementi"
+      },
+      {
+        "id": 3,
+        "question": "La preposizione from esprime:",
+        "answer": "Moto da luogo"
+      },
+      {
+        "id": 4,
+        "question": "In quale delle seguenti frasi la Question Tag è usata correttamente?",
+        "answer": "It was a terrible experience, wasn’t it?"
+      },
+      {
+        "id": 5,
+        "question": "Which of the following words or group of words is not a mitigator?",
+        "answer": "amazingly"
+      },
+      {
+        "id": 6,
+        "question": "Consists of various sounds in an environment that interfere with a source's ability to hear:",
+        "answer": "Physical Noise"
+      },
+      {
+        "id": 7,
+        "question": "Physical noise includes:",
+        "answer": "Barking Dogs"
+      },
+      {
+        "id": 8,
+        "question": "When I____, they were eating:",
+        "answer": "Arrived"
+      },
+      {
+        "id": 9,
+        "question": "If I had worked harder at school, I would have a better job now is an example of:",
+        "answer": "Mixed Conditional"
+      },
+      {
+        "id": 10,
+        "question": "Which of the following parts of speech are adjectives not able to modify?",
+        "answer": "Adverbs"
+      },
+      {
+        "id": 11,
+        "question": "Adjectives that appear after linking verbs are known as:",
+        "answer": "Predicative adjectives"
+      },
+      {
+        "id": 12,
+        "question": "Which of the following types of adjectives are formed from two or more words and a hyphen?",
+        "answer": "Compound adjectives"
+      },
+      {
+        "id": 13,
+        "question": "According to the lesson, native English speakers can sometimes try to maintain social power over English learners by:",
+        "answer": "Making strange facial expressions when they hear you speak English"
+      },
+      {
+        "id": 14,
+        "question": "Scanning is:",
+        "answer": "The technique you might use when reading a telephone directory"
+      },
+      {
+        "id": 15,
+        "question": "When we use reported speech, we often use infinitives as the direct object:",
+        "answer": "Of a reporting verb to express what was said or asked in the past"
+      },
+      {
+        "id": 16,
+        "question": "Characteristics of an independent clause:",
+        "answer": "Expresses a complete thought"
+      },
+      {
+        "id": 17,
+        "question": "As one of the most neglected aspects of English language teaching is:",
+        "answer": "Vocabulary"
+      },
+      {
+        "id": 18,
+        "question": "Improved vocabulary means:",
+        "answer": "All of the above"
+      },
+      {
+        "id": 19,
+        "question": "They usually___________pizza with their family.",
+        "answer": "eat"
+      },
+      {
+        "id": 20,
+        "question": "We are going out ___________our friends.",
+        "answer": "with"
+      },
+      {
+        "id": 21,
+        "question": "You_____an aspirin if you have a headache:",
+        "answer": "should take"
+      },
+      {
+        "id": 22,
+        "question": "__________have you lived in London?",
+        "answer": "How long"
+      },
+      {
+        "id": 23,
+        "question": "Bob was proud of__________for his new job.",
+        "answer": "himself"
+      },
+      {
+        "id": 24,
+        "question": "My brother is ________ than me.",
+        "answer": "taller"
+      },
+      {
+        "id": 25,
+        "question": "I __________to this music for hours. It is so beautiful.",
+        "answer": "would listen"
+      },
+      {
+        "id": 26,
+        "question": "____________ get up early tomorrow morning.",
+        "answer": "I have to"
+      },
+      {
+        "id": 27,
+        "question": "Jacob _____________ rather have spaghetti for lunch.",
+        "answer": "would"
+      },
+      {
+        "id": 28,
+        "question": "What does consistency of verb use mean?",
+        "answer": "You cannot mix tenses"
+      },
+      {
+        "id": 29,
+        "question": "Which of the following is not a component of a phrasal verb?",
+        "answer": "Participle"
+      },
+      {
+        "id": 30,
+        "question": "What do prepositions do that particles cannot do in phrasal verbs?",
+        "answer": "Transitive prepositional phrasal verbs"
+      },
+          {
+            "id": 31,
+            "question": "Il passato dei verbi regolari:",
+            "answer": "Si forma aggiungendo la desinenza '-ed' alla forma base del verbo"
+          },
+          {
+            "id": 32,
+            "question": "Listening is:",
+            "answer": "Intentional"
+          },
+          {
+            "id": 33,
+            "question": "Which is not a description of general listening skill:",
+            "answer": "Who are more interested in their own ideas and ensuring people understand them"
+          },
+          {
+            "id": 34,
+            "question": "Last summer I_____my holiday.",
+            "answer": "didn't like"
+          },
+          {
+            "id": 35,
+            "question": "Manuela is a good singer, ____?",
+            "answer": "isn't she"
+          },
+          {
+            "id": 36,
+            "question": "It is not always easy to separate collocations and compounds:",
+            "answer": "The statement is true"
+          },
+          {
+            "id": 37,
+            "question": "Which is a noun and verb collocation:",
+            "answer": "The economy boomed in the 1990s"
+          },
+          {
+            "id": 38,
+            "question": "In elliptical sentences:",
+            "answer": "A part of the sentence is omitted because it is implied"
+          },
+          {
+            "id": 39,
+            "question": "An independent clause:",
+            "answer": "can be short"
+          },
+          {
+            "id": 40,
+            "question": "A native speaker:",
+            "answer": "Always has more passive vocabulary"
+          },
+          {
+            "id": 41,
+            "question": "The larger your vocabulary, the easier it becomes to break away from old thought patterns and open new lines of reasoning:",
+            "answer": "Our words shape our thoughts"
+          },
+          {
+            "id": 42,
+            "question": "Reading materials that are unfamiliar to you won't help improve your vocabulary:",
+            "answer": "False"
+          },
+          {
+            "id": 43,
+            "question": "Idioms are important part of a language:",
+            "answer": "True"
+          },
+          {
+            "id": 44,
+            "question": "Idiomatic expression is considered to be one of the hallmarks of native-like proficiency because:",
+            "answer": "Part of the ongoing dynamic interaction between speaker/writer and hearer/reader within the discoursal context"
+          },
+          {
+            "id": 45,
+            "question": "What makes learning idioms difficult to L2 learners?",
+            "answer": "The unpredictability and arbitrariness of idioms and the cultural relativity of metaphoric expressions"
+          },
+          {
+            "id": 46,
+            "question": "The________Toys are all broken.",
+            "answer": "Children's"
+          },
+          {
+            "id": 47,
+            "question": "Mary___________Susan are sisters.",
+            "answer": "and"
+          },
+          {
+            "id": 48,
+            "question": "The man was walking__________the river.",
+            "answer": "along"
+          },
+          {
+            "id": 49,
+            "question": "_______borrow your red pen please?",
+            "answer": "Can I"
+          },
+          {
+            "id": 50,
+            "question": "___________you__________come?",
+            "answer": "Are going to"
+          },
+          {
+            "id": 51,
+            "question": "We______________for our holidays tomorrow morning.",
+            "answer": "Are leaving"
+          },
+          {
+            "id": 52,
+            "question": "The boy __________ is going to Milan is Jack.",
+            "answer": "who"
+          },
+          {
+            "id": 53,
+            "question": "I _________ like a cup of tea.",
+            "answer": "would"
+          },
+          {
+            "id": 54,
+            "question": "I ____________ I could eat these biscuits.",
+            "answer": "wish"
+          },
+          {
+            "id": 55,
+            "question": "Change of pronoun in indirect speech is done with which of the following basic rules:",
+            "answer": "If the reported speech has first person pronoun, it will be changed as per the pronoun of reporting speech"
+          },
+          
+            {
+              "id": 56,
+              "question": "Il present perfect si usa:",
+              "answer": "Quando manca un preciso riferimento temporale"
+            },
+            {
+              "id": 57,
+              "question": "Il present perfect si forma in base alla seguente struttura:",
+              "answer": "Soggetto + ausiliare + participio passato"
+            },
+            {
+              "id": 58,
+              "question": "Si usa il simple past anziché il present perfect:",
+              "answer": "Quando l'evento descritto nella frase non produce più effetti sul presente"
+            },
+            {
+              "id": 59,
+              "question": "In inglese, la formazione del superlativo:",
+              "answer": "Comporta variazioni morfologiche per gli aggettivi monosillabici e bisillabici"
+            },
+            {
+              "id": 60,
+              "question": "Il superlativo dell'aggettivo 'bad' (cattivo) è:",
+              "answer": "Worst"
+            },
+            {
+              "id": 61,
+              "question": "Indica come tradurresti la frase 'Kevin è il maggiore di tre figli':",
+              "answer": "Kevin is the eldest of three sons"
+            },
+            {
+              "id": 62,
+              "question": "Nella frase ipotetica di primo tipo (first conditional) in lingua inglese, la frase principale è:",
+              "answer": "Al futuro"
+            },
+            {
+              "id": 63,
+              "question": "Completa in modo corretto la seguente frase: 'We'll go by taxi....'",
+              "answer": "if it rains"
+            },
+            {
+              "id": 64,
+              "question": "La frase ipotetica di secondo tipo (second conditional) viene usata per indicare:",
+              "answer": "Una condizione poco probabile"
+            },
+            {
+              "id": 65,
+              "question": "Completa in modo corretto la seguente frase: 'You would pass the exam....'",
+              "answer": "if you studied harder"
+            },
+
+                {
+                  "id": 66,
+                  "question": "................do house cleaning tomorrow",
+                  "answer": "I'm going to"
+                },
+                {
+                  "id": 67,
+                  "question": "The plane................off at 4:30 a.m.",
+                  "answer": "Takes"
+                },
+                {
+                  "id": 68,
+                  "question": "We................for our holidays tomorrow morning",
+                  "answer": "Are leaving"
+                },
+                {
+                  "id": 69,
+                  "question": "I think they.................the match",
+                  "answer": "Will win"
+                },
+                {
+                  "id": 70,
+                  "question": "The office................at 9:00 a.m.",
+                  "answer": "Opens"
+                },
+                {
+                  "id": 71,
+                  "question": "I.................football tomorrow",
+                  "answer": "Am playing"
+                },
+                {
+                  "id": 72,
+                  "question": "Look! Those cars................",
+                  "answer": "Are going to crash"
+                },
+                {
+                  "id": 73,
+                  "question": "Maybe Trump................the elections!",
+                  "answer": "Will not win"
+                },
+                {
+                  "id": 74,
+                  "question": "................you................come?",
+                  "answer": "Are going to"
+                },
+                {
+                  "id": 75,
+                  "question": "The intercity train................at 4 p.m.",
+                  "answer": "Arrives"
+                },
+              
+            
+                    {
+                      "id": 76,
+                      "question": "Ralph....................his friend at the supermarket",
+                      "answer": "Saw"
+                    },
+                    {
+                      "id": 77,
+                      "question": "I.....................born in New York",
+                      "answer": "Was"
+                    },
+                    {
+                      "id": 78,
+                      "question": "Mary....................to the cinema with her friends",
+                      "answer": "Went"
+                    },
+                    {
+                      "id": 79,
+                      "question": "Last weekend they....................a party",
+                      "answer": "Had"
+                    },
+                    {
+                      "id": 80,
+                      "question": "While I......................down the street, I.....................my friend",
+                      "answer": "Was walking met"
+                    },
+                    {
+                      "id": 81,
+                      "question": "When I...................., they were eating",
+                      "answer": "Arrived"
+                    },
+                    {
+                      "id": 82,
+                      "question": "The students......................a power point for their French lesson",
+                      "answer": "Were preparing"
+                    },
+                    {
+                      "id": 83,
+                      "question": "Last summer I.....................my holiday",
+                      "answer": "Didn't like"
+                    },
+                    {
+                      "id": 84,
+                      "question": "....................good food at the party last night?",
+                      "answer": "Did you eat"
+                    },
+                    {
+                      "id": 85,
+                      "question": "The phone rang while I.....................",
+                      "answer": "Was cooking"
+                    },
+                  
+                    
+                        {
+                          "id": 86,
+                          "question": "Punctuation marks are:",
+                          "answer": "Very important"
+                        },
+                        {
+                          "id": 87,
+                          "question": "Uses of comma:",
+                          "answer": "Separate items in a list"
+                        },
+                        {
+                          "id": 88,
+                          "question": "Don't use a question mark in:",
+                          "answer": "Come here"
+                        },
+                        {
+                          "id": 89,
+                          "question": "An apostrophe is used in:",
+                          "answer": "Contracted forms"
+                        },
+                        {
+                          "id": 90,
+                          "question": "A full stop is used to:",
+                          "answer": "End a clause complete idea"
+                        },
+                        {
+                          "id": 91,
+                          "question": "An independent clause:",
+                          "answer": "Can be short"
+                        },
+                        {
+                          "id": 92,
+                          "question": "A good starter:",
+                          "answer": "To begin with"
+                        },
+                        {
+                          "id": 93,
+                          "question": "A linker is used to:",
+                          "answer": "Contrast"
+                        },
+                        {
+                          "id": 94,
+                          "question": "A capital letter is used:",
+                          "answer": "Proper nouns"
+                        },
+                        {
+                          "id": 95,
+                          "question": "A capital letter always follows a period:",
+                          "answer": "True"
+                        },
+                      
+                            {
+                              "id": 96,
+                              "question": "Which statement is correct:",
+                              "answer": "Milk is healthy"
+                            },
+                            {
+                              "id": 97,
+                              "question": "Which is correct:",
+                              "answer": "Excuse me, I don't know the answer"
+                            },
+                            {
+                              "id": 98,
+                              "question": "Which is correct:",
+                              "answer": "I'm tired"
+                            },
+                            {
+                              "id": 99,
+                              "question": "I ________the bus. I had to walk:",
+                              "answer": "missed"
+                            },
+                            {
+                              "id": 100,
+                              "question": "Homonyms are:",
+                              "answer": "words with the same sound"
+                            },
+                            {
+                              "id": 101,
+                              "question": "Homographs are:",
+                              "answer": "words with the same spelling"
+                            },
+                            {
+                              "id": 102,
+                              "question": "Vocabulary:",
+                              "answer": "is sometimes a problem"
+                            },
+                            {
+                              "id": 103,
+                              "question": "Pronunciation:",
+                              "answer": "can hinder comprehension"
+                            },
+                            {
+                              "id": 104,
+                              "question": "Rules and exceptions in the English language:",
+                              "answer": "takes time to master"
+                            },
+                            {
+                              "id": 105,
+                              "question": "Why do idiomatic expressions present difficulty?",
+                              "answer": "They’re not often equivalent to someone's native language"
+                            }
+                            ,
+                                {
+                                  "id": 106,
+                                  "question": "What is the function of verbs in a sentence:",
+                                  "answer": "To describe an action, state of being, or condition performed or experienced by someone or something"
+                                },
+                                {
+                                  "id": 107,
+                                  "question": "The predicate of a sentence always contains what kind of verbs:",
+                                  "answer": "Finite verbs"
+                                },
+                                {
+                                  "id": 108,
+                                  "question": "Unlike regular verbs, irregular verbs usually have different:",
+                                  "answer": "Past tense and past participle forms"
+                                },
+                                {
+                                  "id": 109,
+                                  "question": "Unlike transitive verbs, intransitive verbs are not able to take which of the following:",
+                                  "answer": "Direct objects"
+                                },
+                                {
+                                  "id": 110,
+                                  "question": "Identify the form of the verb quoted in the following sentence 'My father took me to the movies for my birthday':",
+                                  "answer": "Transitive verb"
+                                },
+                                {
+                                  "id": 111,
+                                  "question": "What is the term for changing a verb's form to reflect things like tense:",
+                                  "answer": "Conjugation"
+                                },
+                                {
+                                  "id": 112,
+                                  "question": "Which of the following is a finite verb:",
+                                  "answer": "is"
+                                },
+                                {
+                                  "id": 113,
+                                  "question": "Identify the finite verb in the following sentence. 'Running late, the family quickly drove to their relative's house.':",
+                                  "answer": "Drove"
+                                },
+                                {
+                                  "id": 114,
+                                  "question": "Finite verbs correspond to a specific subject and ________:",
+                                  "answer": "A tense"
+                                },
+                                {
+                                  "id": 115,
+                                  "question": "In the past tense, finite verbs commonly end in:",
+                                  "answer": "ed"
+                                }
+                                   
+                                ,
+                                    {
+                                      "id": 116,
+                                      "question": "Identify the phrasal verb in the following sentence 'It appears to me that you have thoroughly mucked up the case again.':",
+                                      "answer": "Mucked up"
+                                    },
+                                    {
+                                      "id": 117,
+                                      "question": "Which of the following can be separable in a sentence:",
+                                      "answer": "Something you know and know how to use"
+                                    },
+                                    {
+                                      "id": 118,
+                                      "question": "Which of the following is not a component of a phrasal verb:",
+                                      "answer": "Participle"
+                                    },
+                                    {
+                                      "id": 119,
+                                      "question": "What is the primary difference between prepositional verbs and phrasal verbs:",
+                                      "answer": "Prepositional verbs have a literal meaning; phrasal verbs have an idiomatic meaning"
+                                    },
+                                    {
+                                      "id": 120,
+                                      "question": "What do prepositions do that particles cannot do in phrasal verbs:",
+                                      "answer": "Transitive prepositional phrasal verbs"
+                                    },
+                                    {
+                                      "id": 121,
+                                      "question": "When phrasal verbs are transitive:",
+                                      "answer": "They always take direct objects"
+                                    },
+                                    {
+                                      "id": 122,
+                                      "question": "Sometimes, a prepositional verb may be mistaken for a:",
+                                      "answer": "Phrasal verb"
+                                    },
+                                    {
+                                      "id": 123,
+                                      "question": "\"To be up to\" meaning:",
+                                      "answer": "To be in the midst of doing or planning"
+                                    },
+                                    {
+                                      "id": 124,
+                                      "question": "\"Come around\" meaning:",
+                                      "answer": "To change one's mind about a thing and agree to something after some persuasion or time"
+                                    },
+                                    {
+                                      "id": 125,
+                                      "question": "\"Get over\" meaning:",
+                                      "answer": "To recover from something"
+                                    }
+                                    ,
+                                        {
+                                          "id": 126,
+                                          "question": "There isn't..................cheese in the fridge",
+                                          "answer": "Much"
+                                        },
+                                        {
+                                          "id": 127,
+                                          "question": "I............a black cat running down the street, last night",
+                                          "answer": "Saw"
+                                        },
+                                        {
+                                          "id": 128,
+                                          "question": "I.....................a bad headache today",
+                                          "answer": "Have got"
+                                        },
+                                        {
+                                          "id": 129,
+                                          "question": "They......................any money",
+                                          "answer": "Haven't got"
+                                        },
+                                        {
+                                          "id": 130,
+                                          "question": "I.........................very well today",
+                                          "answer": "Don't feel"
+                                        },
+                                        {
+                                          "id": 131,
+                                          "question": "Is there......................milk in the fridge?",
+                                          "answer": "Any"
+                                        },
+                                        {
+                                          "id": 132,
+                                          "question": "Mom, can you give me ................... money. I need to buy a new shirt",
+                                          "answer": "Some"
+                                        },
+                                        {
+                                          "id": 133,
+                                          "question": ".........................have you lived in London?",
+                                          "answer": "How long"
+                                        },
+                                        {
+                                          "id": 134,
+                                          "question": "Hurry up! We haven't got..................time",
+                                          "answer": "Any"
+                                        },
+                                        {
+                                          "id": 135,
+                                          "question": "....................did you visit Rome?",
+                                          "answer": "When"
+                                        }
+                                        ,
+                                            {
+                                              "id": 136,
+                                              "question": "You____not smoke in the office",
+                                              "answer": "must"
+                                            },
+                                            {
+                                              "id": 137,
+                                              "question": "You____an aspirin if you have a headache",
+                                              "answer": "should take"
+                                            },
+                                            {
+                                              "id": 138,
+                                              "question": "I____a delicious cake yesterday",
+                                              "answer": "made"
+                                            },
+                                            {
+                                              "id": 139,
+                                              "question": "_____borrow your red pen please?",
+                                              "answer": "Can I"
+                                            },
+                                            {
+                                              "id": 140,
+                                              "question": "___see Mr. Smith please?",
+                                              "answer": "Could I"
+                                            },
+                                            {
+                                              "id": 141,
+                                              "question": "_____ask you a question?",
+                                              "answer": "May I"
+                                            },
+                                            {
+                                              "id": 142,
+                                              "question": "Mary ____but I'm not sure",
+                                              "answer": "might come"
+                                            },
+                                            {
+                                              "id": 143,
+                                              "question": "David ____his homework every day",
+                                              "answer": "has to do"
+                                            },
+                                            {
+                                              "id": 144,
+                                              "question": "____for a pizza tonight?",
+                                              "answer": "shall we go"
+                                            },
+                                            {
+                                              "id": 145,
+                                              "question": "I____my homework every day",
+                                              "answer": "do"
+                                            }
+                                            ,
+                                                {
+                                                  "id": 146,
+                                                  "question": "It is used when something is always true or when we are talking about scientific evidences:",
+                                                  "answer": "Zero Conditional"
+                                                },
+                                                {
+                                                  "id": 147,
+                                                  "question": "Used to describe situations that is generally true or to say that one event always follows another:",
+                                                  "answer": "Zero Conditional"
+                                                },
+                                                {
+                                                  "id": 148,
+                                                  "question": "Is used to describe a situation that could have happened in the past if the situation had been different:",
+                                                  "answer": "Third Conditional"
+                                                },
+                                                {
+                                                  "id": 149,
+                                                  "question": "And is used to connect the if clause and the main clause:",
+                                                  "answer": "All of the above"
+                                                },
+                                                {
+                                                  "id": 150,
+                                                  "question": "It describes probabilities and possible results:",
+                                                  "answer": "First Conditional"
+                                                },
+                                                {
+                                                  "id": 151,
+                                                  "question": "Unless can be used as an alternative in the if clause in the first conditional:",
+                                                  "answer": "True"
+                                                },
+                                                {
+                                                  "id": 152,
+                                                  "question": "Modals can also be used instead of would in this type of conditional:",
+                                                  "answer": "Second Conditional"
+                                                },
+                                                {
+                                                  "id": 153,
+                                                  "question": "If + Past Simple + would / wouldn't + verb without to is the way to form a:",
+                                                  "answer": "Second Conditional"
+                                                },
+                                                {
+                                                  "id": 154,
+                                                  "question": "If I had worked harder at school, I would have a better job now is an example of:",
+                                                  "answer": "Mixed Conditional"
+                                                },
+                                                {
+                                                  "id": 155,
+                                                  "question": "If + past perfect + would / wouldn't have + past participle of the verb is the way to form a:",
+                                                  "answer": "Third Conditional"
+                                                }
+                                                ,
+                                                    {
+                                                      "id": 156,
+                                                      "question": "We are................from the trip",
+                                                      "answer": "Completely exhausted"
+                                                    },
+                                                    {
+                                                      "id": 157,
+                                                      "question": "I have................my homework",
+                                                      "answer": "Almost finished"
+                                                    },
+                                                    {
+                                                      "id": 158,
+                                                      "question": "There's................sugar in my tea",
+                                                      "answer": "Too much"
+                                                    },
+                                                    {
+                                                      "id": 159,
+                                                      "question": "Have we got................for the party?",
+                                                      "answer": "Enough drinks"
+                                                    },
+                                                    {
+                                                      "id": 160,
+                                                      "question": "She dances................",
+                                                      "answer": "Beautifully"
+                                                    },
+                                                    {
+                                                      "id": 161,
+                                                      "question": "I remember the day................we first met",
+                                                      "answer": "When"
+                                                    },
+                                                    {
+                                                      "id": 162,
+                                                      "question": "Tell me................you came home so late",
+                                                      "answer": "Why"
+                                                    },
+                                                    {
+                                                      "id": 163,
+                                                      "question": "She speaks English................",
+                                                      "answer": "Fluently"
+                                                    },
+                                                    {
+                                                      "id": 164,
+                                                      "question": "He drives................",
+                                                      "answer": "Badly"
+                                                    },
+                                                    {
+                                                      "id": 165,
+                                                      "question": "................do you go to the cinema?",
+                                                      "answer": "How often"
+                                                    },
+                
+                                                        {
+                                                          "id": 166,
+                                                          "question": "..................am a very good tennis player",
+                                                          "answer": "I"
+                                                        },
+                                                        {
+                                                          "id": 167,
+                                                          "question": "...................is a smart boy",
+                                                          "answer": "He"
+                                                        },
+                                                        {
+                                                          "id": 168,
+                                                          "question": "The boy ................. is going to Milan is Jack",
+                                                          "answer": "Who"
+                                                        },
+                                                        {
+                                                          "id": 169,
+                                                          "question": "Please buy those apples! I would like................",
+                                                          "answer": "Some"
+                                                        },
+                                                        {
+                                                          "id": 170,
+                                                          "question": "I cut .................. chopping the vegetables",
+                                                          "answer": "Myself"
+                                                        },
+                                                        {
+                                                          "id": 171,
+                                                          "question": "Bob was proud of................ for his new job",
+                                                          "answer": "Himself"
+                                                        },
+                                                        {
+                                                          "id": 172,
+                                                          "question": "................. are Mary's children",
+                                                          "answer": "Those"
+                                                        },
+                                                        {
+                                                          "id": 173,
+                                                          "question": "Whose bag is .................? It is ................",
+                                                          "answer": "This / hers"
+                                                        },
+                                                        {
+                                                          "id": 174,
+                                                          "question": ".................. are you from?",
+                                                          "answer": "Where"
+                                                        },
+                                                        {
+                                                          "id": 175,
+                                                          "question": ".................did you see your friend?",
+                                                          "answer": "When"
+                                                        },
+                                                        
+                                                            {
+                                                              "id": 176,
+                                                              "question": "Mary....................Susan are sisters",
+                                                              "answer": "And"
+                                                            },
+                                                            {
+                                                              "id": 177,
+                                                              "question": "I like Spinach ..................... I don't like carrots",
+                                                              "answer": "But"
+                                                            },
+                                                            {
+                                                              "id": 178,
+                                                              "question": "We are going out ......................our friends",
+                                                              "answer": "With"
+                                                            },
+                                                            {
+                                                              "id": 179,
+                                                              "question": "The weather in London is usually horrible.....................January",
+                                                              "answer": "In"
+                                                            },
+                                                            {
+                                                              "id": 180,
+                                                              "question": "I'll meet you.....................five o'clock",
+                                                              "answer": "At"
+                                                            },
+                                                            {
+                                                              "id": 181,
+                                                              "question": "Susan goes to work......................bus",
+                                                              "answer": "By"
+                                                            },
+                                                            {
+                                                              "id": 182,
+                                                              "question": "We can......................go to the cinema...................... the theater",
+                                                              "answer": "Either ... or"
+                                                            },
+                                                            {
+                                                              "id": 183,
+                                                              "question": ".....................Anne....................Ted like swimming!",
+                                                              "answer": "Neither ... nor"
+                                                            },
+                                                            {
+                                                              "id": 184,
+                                                              "question": "The new pub is .....................the bank and the supermarket",
+                                                              "answer": "Between"
+                                                            },
+                                                            {
+                                                              "id": 185,
+                                                              "question": "The man was walking......................the river",
+                                                              "answer": "Along"
+                                                            },
+                                                            {
+                                                                "id": 186,
+                                                                "question": "You......not smoke in the office:",
+                                                                "answer": "must"
+                                                              },
+                                                              {
+                                                                "id": 187,
+                                                                "question": "You........an aspirin if you have a headache:",
+                                                                "answer": "should take"
+                                                              },
+                                                              {
+                                                                "id": 188,
+                                                                "question": "I........a delicious cake yesterday:",
+                                                                "answer": "made"
+                                                              },
+                                                              {
+                                                                "id": 189,
+                                                                "question": ".........borrow your red pen please?",
+                                                                "answer": "Can I"
+                                                              },
+                                                              {
+                                                                "id": 190,
+                                                                "question": ".........see Mr. Smith please?",
+                                                                "answer": "Could I"
+                                                              },
+                                                              {
+                                                                "id": 191,
+                                                                "question": "........ask you a question?",
+                                                                "answer": "May I"
+                                                              },
+                                                              {
+                                                                "id": 192,
+                                                                "question": "Mary .......... but I'm not sure:",
+                                                                "answer": "might come"
+                                                              },
+                                                              {
+                                                                "id": 193,
+                                                                "question": "David ............ his homework every day:",
+                                                                "answer": "has to do"
+                                                              },
+                                                              {
+                                                                "id": 194,
+                                                                "question": ".... for a pizza tonight?:",
+                                                                "answer": "shall we go"
+                                                              },
+                                                              {
+                                                                "id": 195,
+                                                                "question": "I ........... my homework every day:",
+                                                                "answer": "do"
+                                                              },
+                                                              {
+                                                                "id": 196,
+                                                                "question": "I often..............with my friends",
+                                                                "answer": "Go out"
+                                                              },
+                                                              {
+                                                                "id": 197,
+                                                                "question": "They usually....................pizza with their family",
+                                                                "answer": "Eat"
+                                                              },
+                                                              {
+                                                                "id": 198,
+                                                                "question": "We....................a letter now",
+                                                                "answer": "Are reading"
+                                                              },
+                                                              {
+                                                                "id": 199,
+                                                                "question": "Mary....................the house at the moment",
+                                                                "answer": "Is cleaning"
+                                                              },
+                                                              {
+                                                                "id": 200,
+                                                                "question": "....................you....................football tonight?",
+                                                                "answer": "Are playing"
+                                                              },
+                                                              {
+                                                                "id": 201,
+                                                                "question": "This is....................book",
+                                                                "answer": "John's"
+                                                              },
+                                                              {
+                                                                "id": 202,
+                                                                "question": "....................Tayler is my uncle",
+                                                                "answer": "Mr"
+                                                              },
+                                                              {
+                                                                "id": 203,
+                                                                "question": "My mother is....................Smith",
+                                                                "answer": "Mrs"
+                                                              },
+                                                              {
+                                                                "id": 204,
+                                                                "question": "....................Martin is a good preacher. He's very kind!",
+                                                                "answer": "Reverend"
+                                                              },
+                                                              {
+                                                                "id": 205,
+                                                                "question": "The....................toys are all broken",
+                                                                "answer": "Children's"
+                                                              },
+                                                              {
+                                                                "id": 206,
+                                                                "question": "I ................ to this music for hours. It is so beautiful",
+                                                                "answer": "Would listen"
+                                                              },
+                                                              {
+                                                                "id": 207,
+                                                                "question": "John ............... his colleague immediately",
+                                                                "answer": "Should call"
+                                                              },
+                                                              {
+                                                                "id": 208,
+                                                                "question": "................ a glass of wine?",
+                                                                "answer": "Would you like"
+                                                              },
+                                                              {
+                                                                "id": 209,
+                                                                "question": "The Clintons ................ a bigger house",
+                                                                "answer": "Would like"
+                                                              },
+                                                              {
+                                                                "id": 210,
+                                                                "question": "If it is bad weather, I ................ out",
+                                                                "answer": "Will not go"
+                                                              },
+                                                              {
+                                                                "id": 211,
+                                                                "question": "I ................ you if you marry me",
+                                                                "answer": "Will always love"
+                                                              },
+                                                              {
+                                                                "id": 212,
+                                                                "question": "If I................ more money, I ................ a new car",
+                                                                "answer": "Had / would buy"
+                                                              },
+                                                              {
+                                                                "id": 213,
+                                                                "question": "If I ................ a lottery, I ................ the poor",
+                                                                "answer": "Won / would help"
+                                                              },
+                                                              {
+                                                                "id": 214,
+                                                                "question": "................ If we ................ younger, I ................ around the world",
+                                                                "answer": "Were / would travel"
+                                                              },
+                                                              {
+                                                                "id": 215,
+                                                                "question": "If Mary................ more, she ................ better marks",
+                                                                "answer": "Studied / would get"
+                                                              },
+                                                              {
+                                                                "id": 216,
+                                                                "question": "I ................ like a cup of tea",
+                                                                "answer": "Would"
+                                                              },
+                                                              {
+                                                                "id": 217,
+                                                                "question": "I ................. I could go to Rome",
+                                                                "answer": "Wish"
+                                                              },
+                                                              {
+                                                                "id": 218,
+                                                                "question": "If you try hard you ................ succeed",
+                                                                "answer": "Will"
+                                                              },
+                                                              {
+                                                                "id": 219,
+                                                                "question": "I don't ................ to study English anymore!",
+                                                                "answer": "Want"
+                                                              },
+                                                              {
+                                                                "id": 220,
+                                                                "question": "................ you help me?",
+                                                                "answer": "Will"
+                                                              },
+                                                              {
+                                                                "id": 221,
+                                                                "question": "I ................ I could eat these biscuits",
+                                                                "answer": "Wish"
+                                                              },
+                                                              {
+                                                                "id": 222,
+                                                                "question": "I'm afraid it ' ................ a long meeting",
+                                                                "answer": "Will be"
+                                                              },
+                                                              {
+                                                                "id": 223,
+                                                                "question": "I ................ at work before eight",
+                                                                "answer": "Won't be"
+                                                              },
+                                                              {
+                                                                "id": 224,
+                                                                "question": "................. get up early tomorrow morning",
+                                                                "answer": "I have to"
+                                                              },
+                                                              {
+                                                                "id": 225,
+                                                                "question": "Jacob ................ rather have spaghetti for lunch",
+                                                                "answer": "Would"
+                                                              },
+                                                              {
+                                                                "id": 226,
+                                                                "question": "My brother is ................ than me",
+                                                                "answer": "Taller"
+                                                              },
+                                                              {
+                                                                "id": 227,
+                                                                "question": "My book is ................ interesting than yours",
+                                                                "answer": "More"
+                                                              },
+                                                              {
+                                                                "id": 228,
+                                                                "question": "Italian food is ................ than junk food",
+                                                                "answer": "Better"
+                                                              },
+                                                              {
+                                                                "id": 229,
+                                                                "question": "Naples is ................. crowded than New York",
+                                                                "answer": "Less"
+                                                              },
+                                                              {
+                                                                "id": 230,
+                                                                "question": "Mary is ................. Susan",
+                                                                "answer": "As intelligent as"
+                                                              },
+                                                              {
+                                                                "id": 231,
+                                                                "question": "I think Robert De Niro is ................ fascinating actor",
+                                                                "answer": "The most"
+                                                              },
+                                                              {
+                                                                "id": 232,
+                                                                "question": "Susan is ................ in the class",
+                                                                "answer": "The most intelligent"
+                                                              },
+                                                              {
+                                                                "id": 233,
+                                                                "question": "This is ................ doll of my collection",
+                                                                "answer": "The least beautiful"
+                                                              },
+                                                              {
+                                                                "id": 234,
+                                                                "question": "January is ................ month of the year",
+                                                                "answer": "The coldest"
+                                                              },
+                                                              {
+                                                                "id": 235,
+                                                                "question": "In my opinion Ferrari is ................ in Europe",
+                                                                "answer": "the best"
+                                                              },
+                                                              {
+                                                                "id": 236,
+                                                                "question": "Which of the following parts of speech are adjectives not able to modify:",
+                                                                "answer": "Adverbs"
+                                                              },
+                                                              {
+                                                                "id": 237,
+                                                                "question": "Adjectives that appear after linking verbs are known as:",
+                                                                "answer": "Predicative adjectives"
+                                                              },
+                                                              {
+                                                                "id": 238,
+                                                                "question": "Which of the following types of adjectives are formed from two or more words and a hyphen:",
+                                                                "answer": "Compound adjectives"
+                                                              },
+                                                              {
+                                                                "id": 239,
+                                                                "question": "Which of the following often have properties similar to adjectives:",
+                                                                "answer": "Determiners"
+                                                              },
+                                                              {
+                                                                "id": 240,
+                                                                "question": "What is the name for an adjective used to describe someone or something with the highest degree of a certain quality:",
+                                                                "answer": "Superlative adjectives"
+                                                              },
+                                                              {
+                                                                "id": 241,
+                                                                "question": "Which of the following is an example of an attributive adjective:",
+                                                                "answer": "A black dog"
+                                                              },
+                                                              {
+                                                                "id": 242,
+                                                                "question": "Which of the following is not an attributive adjective:",
+                                                                "answer": "Sarah is short"
+                                                              },
+                                                              {
+                                                                "id": 243,
+                                                                "question": "Attributive adjectives never ____:",
+                                                                "answer": "Follow a linking verb"
+                                                              },
+                                                              {
+                                                                "id": 244,
+                                                                "question": "Most adjectives that are never attributive begin with the letter ____:",
+                                                                "answer": "A"
+                                                              },
+                                                              {
+                                                                "id": 245,
+                                                                "question": "Which sentence is traditionally considered to be more correct:",
+                                                                "answer": "The secretaries-general of the three countries are meeting today"
+                                                              },
+                                                              {
+                                                                "id": 246,
+                                                                "question": "How are regular adverbs generally formed:",
+                                                                "answer": "By adding '-ly' to the end of an adjective"
+                                                              },
+                                                              {
+                                                                "id": 247,
+                                                                "question": "Which of the following cannot be used to create an adverbial phrase:",
+                                                                "answer": "Intensifiers"
+                                                              },
+                                                              {
+                                                                "id": 248,
+                                                                "question": "Identify the category of the adverb in the following sentence 'I'm pretty happy with the way this turned out':",
+                                                                "answer": "Adverb of degree"
+                                                              },
+                                                              {
+                                                                "id": 249,
+                                                                "question": "Which of the following is used to create adverbial clauses:",
+                                                                "answer": "Subordinating conjunctions"
+                                                              },
+                                                              {
+                                                                "id": 250,
+                                                                "question": "What are the three different categories of adverbs of time:",
+                                                                "answer": "Points in time, duration, and frequency"
+                                                              },
+                                                              {
+                                                                "id": 251,
+                                                                "question": "Describe when or for how long something happens or is the case:",
+                                                                "answer": "Adverbs of time"
+                                                              },
+                                                              {
+                                                                "id": 252,
+                                                                "question": "Used to draw attention to a particular part of a clause:",
+                                                                "answer": "Focusing adverbs"
+                                                              },
+                                                              {
+                                                                "id": 253,
+                                                                "question": "\"Wonderfully\" is an:",
+                                                                "answer": "Adverb of manner"
+                                                              },
+                                                              {
+                                                                "id": 254,
+                                                                "question": "Which of the following adverbs of place is used to describe both movement and direction:",
+                                                                "answer": "Onwards"
+                                                              },
+                                                              {
+                                                                "id": 255,
+                                                                "question": "Which of the following is not an adverb:",
+                                                                "answer": "Towards"
+                                                              },
+                                                              {
+                                                                "id": 256,
+                                                                "question": "What is the most common way to form an adverb of manner:",
+                                                                "answer": "Add '-ly' to the end of the adjective"
+                                                              },
+                                                              {
+                                                                "id": 257,
+                                                                "question": "Which of the following is an adverb of manner:",
+                                                                "answer": "strongly"
+                                                              },
+                                                              {
+                                                                "id": 258,
+                                                                "question": "What is the adverb of degree used in this sentence 'I will happily do as you ask, but it will take a bit of time, so I will try to work very quickly':",
+                                                                "answer": "very"
+                                                              },
+                                                              {
+                                                                "id": 259,
+                                                                "question": "Where does an adverb of degree usually appear in a sentence:",
+                                                                "answer": "Before the word it modifies"
+                                                              },
+                                                              {
+                                                                "id": 260,
+                                                                "question": "Which of the following words is a mitigator:",
+                                                                "answer": "Rather"
+                                                              },
+                                                              {
+                                                                "id": 261,
+                                                                "question": "Which of the following words or group of words is not a mitigator:",
+                                                                "answer": "amazingly"
+                                                              },
+                                                              {
+                                                                "id": 262,
+                                                                "question": "When does an adverb of frequency appear before the verb be:",
+                                                                "answer": "A & B"
+                                                              },
+                                                              {
+                                                                "id": 263,
+                                                                "question": "Identify the adverb of frequency in the following sentence:",
+                                                                "answer": "hourly"
+                                                              },
+                                                              {
+                                                                "id": 264,
+                                                                "question": "Which of the following sentences does not use an adverb of purpose:",
+                                                                "answer": "The flight leaves at 10 AM; therefore, we must be at the airport by 6 o'clock in the morning"
+                                                              },
+                                                              {
+                                                                "id": 265,
+                                                                "question": "Which of the following cannot be used to form adverbs of purpose:",
+                                                                "answer": "Coordinating conjunctions"
+                                                              },
+                                                              {
+                                                                "id": 266,
+                                                                "question": "It's important to know the difference between a phrase and clause to punctuate correctly:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 267,
+                                                                "question": "A prepositional phrase is a phrase:",
+                                                                "answer": "That begins with a preposition and ends with a noun or a pronoun"
+                                                              },
+                                                              {
+                                                                "id": 268,
+                                                                "question": "To find the subject:",
+                                                                "answer": "Find who or what does the action"
+                                                              },
+                                                              {
+                                                                "id": 269,
+                                                                "question": "Characteristics of a subordinate clause:",
+                                                                "answer": "Cannot stand alone as a simple sentence"
+                                                              },
+                                                              {
+                                                                "id": 270,
+                                                                "question": "The bus to Eastmont Mall:",
+                                                                "answer": "Is a phrase"
+                                                              },
+                                                              {
+                                                                "id": 271,
+                                                                "question": "When functioning like an adverb, the phrase answers:",
+                                                                "answer": "Where? When? How? Or to what extent? about the verb"
+                                                              },
+                                                              {
+                                                                "id": 272,
+                                                                "question": "Characteristics of an independent clause:",
+                                                                "answer": "Expresses a complete thought"
+                                                              },
+                                                              {
+                                                                "id": 273,
+                                                                "question": "An appositive is a word that renames, identifies, or gives more detail about:",
+                                                                "answer": "A noun or pronoun that it follows in the sentence"
+                                                              },
+                                                              {
+                                                                "id": 274,
+                                                                "question": "Example of an independent clause is:",
+                                                                "answer": "Henry walked home from school"
+                                                              },
+                                                              {
+                                                                "id": 275,
+                                                                "question": "Example of a dependent clause is:",
+                                                                "answer": "Because Jack broke my cellphone"
+                                                              },
+                                                              {
+                                                                "id": 276,
+                                                                "question": "In direct speech, a person's exact words are placed in quotation marks and set off with a comma and a reporting clause or signal phrase, such as:",
+                                                                "answer": "\"said\" or \"asked\""
+                                                              },
+                                                              {
+                                                                "id": 277,
+                                                                "question": "Indirect speech is:",
+                                                                "answer": "Not usually placed inside quote marks"
+                                                              },
+                                                              {
+                                                                "id": 278,
+                                                                "question": "Which is a direct speech:",
+                                                                "answer": "\"Where is your textbook?\" the teacher asked me."
+                                                              },
+                                                              {
+                                                                "id": 279,
+                                                                "question": "Both direct and indirect speech are stylistic devices for conveying messages:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 280,
+                                                                "question": "A direct speech sentence consists of two parts, what are they:",
+                                                                "answer": "Quoted part and unquoted part"
+                                                              },
+                                                              {
+                                                                "id": 281,
+                                                                "question": "He said, \"I am looking for reported speech definition\", the 'He said' part is the:",
+                                                                "answer": "Reporting speech"
+                                                              },
+                                                              {
+                                                                "id": 282,
+                                                                "question": "Following punctuation rules in reported speech are applied such as:",
+                                                                "answer": "Question mark is not converted into full stop"
+                                                              },
+                                                              {
+                                                                "id": 283,
+                                                                "question": "Change of pronoun in indirect speech is done with which of following basic rules:",
+                                                                "answer": "If the reported speech has first person pronoun, it will be changed as per the pronoun of reporting speech"
+                                                              },
+                                                              {
+                                                                "id": 284,
+                                                                "question": "If the reported speech has second person:",
+                                                                "answer": "It is changed as per the object of reporting speech"
+                                                              },
+                                                              {
+                                                                "id": 285,
+                                                                "question": "Change in Modal Verbs applies as:",
+                                                                "answer": "Can into Could, May into Might, Must into had to"
+                                                              },
+                                                              {
+                                                                "id": 286,
+                                                                "question": "An infinitive is:",
+                                                                "answer": "Is the most basic form of a verb"
+                                                              },
+                                                              {
+                                                                "id": 287,
+                                                                "question": "Infinitives are used to express an action as a concept, rather than what is being done or performed by the subject of a clause:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 288,
+                                                                "question": "Infinitives can act as nouns:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 289,
+                                                                "question": "Intransitive verbs do not take direct objects:",
+                                                                "answer": "You will only find infinitives used as the objects of transitive verbs"
+                                                              },
+                                                              {
+                                                                "id": 290,
+                                                                "question": "When we use reported speech, we often use infinitives as the direct object:",
+                                                                "answer": "Of a 'reporting verb' to express what was said or asked in the past"
+                                                              },
+                                                              {
+                                                                "id": 291,
+                                                                "question": "Certain verbs do not make sense with only a direct object:",
+                                                                "answer": "Especially when that direct object is a person"
+                                                              },
+                                                              {
+                                                                "id": 292,
+                                                                "question": "When infinitives are used as adjectives, they function in a similar way to relative clauses:",
+                                                                "answer": "Always True"
+                                                              },
+                                                              {
+                                                                "id": 293,
+                                                                "question": "In elliptical sentences:",
+                                                                "answer": "A part of the sentence is omitted because it is implied"
+                                                              },
+                                                              {
+                                                                "id": 294,
+                                                                "question": "Gerunds and infinitives are both verb forms that can function as nouns:",
+                                                                "answer": "They are both often used as the objects of 'main' verbs"
+                                                              },
+                                                              {
+                                                                "id": 295,
+                                                                "question": "A Gerund is:",
+                                                                "answer": "A verb in the ing form"
+                                                              },
+
+                                                              {
+                                                                "id": 296,
+                                                                "question": "It's not important to learn vocabulary:",
+                                                                "answer": "False"
+                                                              },
+                                                              {
+                                                                "id": 297,
+                                                                "question": "Passive Vocabulary is:",
+                                                                "answer": "Something you know but don't know how to use"
+                                                              },
+                                                              {
+                                                                "id": 298,
+                                                                "question": "Active Vocabulary is:",
+                                                                "answer": "Something you know and know how to use"
+                                                              },
+                                                              {
+                                                                "id": 299,
+                                                                "question": "A native speaker:",
+                                                                "answer": "Always has more passive vocabulary"
+                                                              },
+                                                              {
+                                                                "id": 300,
+                                                                "question": "Learn the roots of words:",
+                                                                "answer": "Is one way to generally improve vocabulary"
+                                                              },
+                                                              {
+                                                                "id": 301,
+                                                                "question": "Improved vocabulary means:",
+                                                                "answer": "All of the above"
+                                                              },
+                                                              {
+                                                                "id": 302,
+                                                                "question": "The larger your vocabulary, the easier it becomes to break away from old thought patterns and open new lines of reasoning:",
+                                                                "answer": "Our words shape our thoughts"
+                                                              },
+                                                              {
+                                                                "id": 303,
+                                                                "question": "A good vocabulary is the single best predictor for career success:",
+                                                                "answer": "and usually comes before achievement"
+                                                              },
+                                                              {
+                                                                "id": 304,
+                                                                "question": "Reading materials that are unfamiliar to you won't help improve your vocabulary:",
+                                                                "answer": "False"
+                                                              },
+                                                              {
+                                                                "id": 305,
+                                                                "question": "Putting the vocabulary you learned into use is very important:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 306,
+                                                                "question": "Traditional view reading theory is focused on:",
+                                                                "answer": "Readers are passive recipients of information in the text"
+                                                              },
+                                                              {
+                                                                "id": 307,
+                                                                "question": "The 'bottom-up' view of reading consists of:",
+                                                                "answer": "Decoding a series of written symbols into their aural equivalents in the quest for making sense of the text"
+                                                              },
+                                                              {
+                                                                "id": 308,
+                                                                "question": "The 'top-down' model is in direct opposition to the 'bottom-up' model:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 309,
+                                                                "question": "Cognitively based views of reading comprehension emphasize:",
+                                                                "answer": "The interactive nature of reading and the constructive nature of comprehension"
+                                                              },
+                                                              {
+                                                                "id": 310,
+                                                                "question": "Scanning is:",
+                                                                "answer": "The technique you might use when reading a telephone directory"
+                                                              },
+                                                              {
+                                                                "id": 311,
+                                                                "question": "Reading goals can be:",
+                                                                "answer": "A selected subject area"
+                                                              },
+                                                              {
+                                                                "id": 312,
+                                                                "question": "Which among these is a way to improve reading:",
+                                                                "answer": "Read materials you are interested in"
+                                                              },
+                                                              {
+                                                                "id": 313,
+                                                                "question": "In choosing a text:",
+                                                                "answer": "Read the publisher's blurb at the back or inside sleeve for an overview of the content"
+                                                              },
+                                                              {
+                                                                "id": 314,
+                                                                "question": "Skimming is:",
+                                                                "answer": "The process of speedy reading for general meaning"
+                                                              },
+                                                              {
+                                                                "id": 315,
+                                                                "question": "To enlarge vocabulary:",
+                                                                "answer": "Accumulating and using words on a daily basis"
+                                                              },
+                                                              {
+                                                                "id": 316,
+                                                                "question": "Listening helps you become more aware of your surroundings:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 317,
+                                                                "question": "Listening is:",
+                                                                "answer": "Intentional"
+                                                              },
+                                                              {
+                                                                "id": 318,
+                                                                "question": "To become a better student:",
+                                                                "answer": "One should improve listening skills"
+                                                              },
+                                                              {
+                                                                "id": 319,
+                                                                "question": "Classroom setting learning situation is:",
+                                                                "answer": "For students who are uncomfortable learning alone"
+                                                              },
+                                                              {
+                                                                "id": 320,
+                                                                "question": "Which is not a description of general listening skill:",
+                                                                "answer": "Who are more interested in their own ideas and ensuring people understand that"
+                                                              },
+                                                              {
+                                                                "id": 321,
+                                                                "question": "Action-oriented listeners are:",
+                                                                "answer": "Less patient for listening to the reasons behind the task"
+                                                              },
+                                                              {
+                                                                "id": 322,
+                                                                "question": "Content-oriented listeners are:",
+                                                                "answer": "Interested in the message itself"
+                                                              },
+                                                              {
+                                                                "id": 323,
+                                                                "question": "Consists of various sounds in an environment that interfere with a source's ability to hear:",
+                                                                "answer": "Physical Noise"
+                                                              },
+                                                              {
+                                                                "id": 324,
+                                                                "question": "Physical noise includes:",
+                                                                "answer": "Barking Dogs"
+                                                              },
+                                                              {
+                                                                "id": 325,
+                                                                "question": "Listening is a skill:",
+                                                                "answer": "That can be learned but takes effort and patience"
+                                                              },
+                                                              {
+                                                                "id": 326,
+                                                                "question": "When improving writing learning verbs is essential:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 327,
+                                                                "question": "If both sides of the phrase are singular:",
+                                                                "answer": "Use a singular verb"
+                                                              },
+                                                              {
+                                                                "id": 328,
+                                                                "question": "If both sides are plural:",
+                                                                "answer": "Use a plural verb"
+                                                              },
+                                                              {
+                                                                "id": 329,
+                                                                "question": "What does a verb do to the language:",
+                                                                "answer": "It gives life to it"
+                                                              },
+                                                              {
+                                                                "id": 330,
+                                                                "question": "Use of verb by writers:",
+                                                                "answer": "All of the above"
+                                                              },
+                                                              {
+                                                                "id": 331,
+                                                                "question": "What does consistency of verb use mean:",
+                                                                "answer": "You cannot mix tenses"
+                                                              },
+                                                              {
+                                                                "id": 332,
+                                                                "question": "Knowing your writing weakness:",
+                                                                "answer": "Will help you identify your points to improve"
+                                                              },
+                                                              {
+                                                                "id": 333,
+                                                                "question": "Reading writing of other writers:",
+                                                                "answer": "Will give you knowledge of the different writing techniques"
+                                                              },
+                                                              {
+                                                                "id": 334,
+                                                                "question": "When writing:",
+                                                                "answer": "You have to be aware who your readers will be"
+                                                              },
+                                                              {
+                                                                "id": 335,
+                                                                "question": "A powerful headline means:",
+                                                                "answer": "Uses power words or numbers to attract attention in busy social media"
+                                                              },
+                                                              {
+                                                                "id": 336,
+                                                                "question": "What is speaking:",
+                                                                "answer": "The process of building and sharing meaning through the use of verbal and non-verbal symbols, in a variety of contexts"
+                                                              },
+                                                              {
+                                                                "id": 337,
+                                                                "question": "Native English-Speaking implies:",
+                                                                "answer": "Substituting vowel sounds of function words with the vowel sound schwa, using idioms and slang"
+                                                              },
+                                                              {
+                                                                "id": 338,
+                                                                "question": "Global English is:",
+                                                                "answer": "A dialect"
+                                                              },
+                                                              {
+                                                                "id": 339,
+                                                                "question": "According to the lesson, native English speakers can sometimes try to maintain social power over English learners by:",
+                                                                "answer": "Making strange facial expressions when they hear you speak English"
+                                                              },
+                                                              {
+                                                                "id": 340,
+                                                                "question": "Ways to improve speaking skills are:",
+                                                                "answer": "Talk to yourself"
+                                                              },
+                                                              {
+                                                                "id": 341,
+                                                                "question": "One reason why some people find it difficult to speak English confidently:",
+                                                                "answer": "They don't like English"
+                                                              },
+                                                              {
+                                                                "id": 342,
+                                                                "question": "Global English will be the main language:",
+                                                                "answer": "Globalized business and social networking for a very long time"
+                                                              },
+                                                              {
+                                                                "id": 343,
+                                                                "question": "Native English speakers cannot understand each other:",
+                                                                "answer": "False"
+                                                              },
+                                                              {
+                                                                "id": 344,
+                                                                "question": "If you know that you will be in a situation where you will be speaking English and are feeling nervous:",
+                                                                "answer": "Organize your feelings during certain situations"
+                                                              },
+                                                              {
+                                                                "id": 345,
+                                                                "question": "Native English speakers:",
+                                                                "answer": "Learned throughout daily life"
+                                                              },
+                                                              {
+                                                                "id": 346,
+                                                                "question": "Idioms are important part of a language:",
+                                                                "answer": "True"
+                                                              },
+                                                              {
+                                                                "id": 347,
+                                                                "question": "What do vocabulary and culture say about learning idioms:",
+                                                                "answer": "That they are intertwined and L2 speakers can gain more vocabulary through idioms"
+                                                              },
+                                                              {
+                                                                "id": 348,
+                                                                "question": "Idiomatic expression is considered to be one of the hallmarks of native-like proficiency because:",
+                                                                "answer": "Part of the ongoing dynamic interaction between speaker/writer and hearer/reader within the discoursal context"
+                                                              },
+                                                              {
+                                                                "id": 349,
+                                                                "question": "Who said 'If natural language had been designed by a logician, idioms would not exist':",
+                                                                "answer": "Johnson Laird"
+                                                              },
+                                                              {
+                                                                "id": 350,
+                                                                "question": "Why is it said that many idioms are also culturally embedded:",
+                                                                "answer": "Because idioms' meanings are not motivated only by their lexical components, but also by the specific cultural and historical context in which they originated"
+                                                              },
+                                                              {
+                                                                "id": 351,
+                                                                "question": "The extent to which an idiom's meaning can be inferred from the meanings of its constituents is referring to:",
+                                                                "answer": "Semantic transparency"
+                                                              },
+                                                              {
+                                                                "id": 352,
+                                                                "question": "What makes learning idioms difficult to L2 learners:",
+                                                                "answer": "The unpredictability and arbitrariness of idioms and the cultural relativity of metaphoric expressions"
+                                                              },
+                                                              {
+                                                                "id": 353,
+                                                                "question": "Hit the nail on the head means:",
+                                                                "answer": "Do or say something exactly right"
+                                                              },
+                                                              {
+                                                                "id": 354,
+                                                                "question": "Hit the hay means:",
+                                                                "answer": "Go to bed"
+                                                              },
+                                                              {
+                                                                "id": 355,
+                                                                "question": "Cost an arm and a leg means:",
+                                                                "answer": "Something expensive"
+                                                              },
+                                                              {
+                                                                "id": 356,
+                                                                "question": "What is a collocation:",
+                                                                "answer": "A group of words that are used together"
+                                                              },
+                                                              {
+                                                                "id": 357,
+                                                                "question": "Why is learning collocations important:",
+                                                                "answer": "Because some collocations are fixed and very strong"
+                                                              },
+                                                              {
+                                                                "id": 358,
+                                                                "question": "'Make an effort' is an example of:",
+                                                                "answer": "Collocation"
+                                                              },
+                                                              {
+                                                                "id": 359,
+                                                                "question": "It is not always easy to separate collocations and compounds:",
+                                                                "answer": "The statement is true"
+                                                              },
+                                                              {
+                                                                "id": 360,
+                                                                "question": "Learning collocations is a good idea because they can:",
+                                                                "answer": "Give you alternative ways of saying something"
+                                                              },
+                                                              {
+                                                                "id": 361,
+                                                                "question": "The key things to learning collocations are:",
+                                                                "answer": "Practise using what you want to learn in contexts that are meaningful for you personally"
+                                                              },
+                                                              {
+                                                                "id": 362,
+                                                                "question": "Which is a noun and verb collocation:",
+                                                                "answer": "The economy boomed in the 1990s"
+                                                              },
+                                                              {
+                                                                "id": 363,
+                                                                "question": "Which is an adjective and noun collocation:",
+                                                                "answer": "Emma always wears red or yellow or some other bright colour"
+                                                              },
+                                                              {
+                                                                "id": 364,
+                                                                "question": "A sunny smile:",
+                                                                "answer": "A metaphor"
+                                                              },
+                                                              {
+                                                                "id": 365,
+                                                                "question": "Metaphors are more common in:",
+                                                                "answer": "Poems"
+                                                              },
+                                                              {
+                                                                "id": 366,
+                                                                "question": "Why do many writers write in passive voice:",
+                                                                "answer": "Because it is the most common type of voice used in academic writing"
+                                                              },
+                                                              {
+                                                                "id": 367,
+                                                                "question": "Using active voice in content marketing helps to:",
+                                                                "answer": "Engage"
+                                                              },
+                                                              {
+                                                                "id": 368,
+                                                                "question": "When you write in passive voice, your content becomes drawn out and less exciting to read, describes:",
+                                                                "answer": "Momentum"
+                                                              },
+                                                              {
+                                                                "id": 369,
+                                                                "question": "Passive voice often contains helping words like:",
+                                                                "answer": "am, is, are, was and were, being, been, and be, have, has, had, do, does, did, will, would, shall, should, may, might, must, can, and could"
+                                                              },
+                                                              {
+                                                                "id": 370,
+                                                                "question": "Which of the following sentences is in the active voice:",
+                                                                "answer": "You should always stretch your muscles before exercising"
+                                                              },
+                                                              {
+                                                                "id": 371,
+                                                                "question": "In the following passive-voice sentence, which group of words is the receiver of the action? 'The large monument was erected by the construction crew last spring':",
+                                                                "answer": "The large monument"
+                                                              },
+                                                              {
+                                                                "id": 372,
+                                                                "question": "Which choice correctly converts the following active-voice sentence into the passive voice? 'You should congratulate your sister on her academic achievement':",
+                                                                "answer": "Your sister should be congratulated on her academic achievement"
+                                                              },
+                                                              {
+                                                                "id": 373,
+                                                                "question": "Which of the following sentences uses the passive voice:",
+                                                                "answer": "This scarf was crocheted by my friend"
+                                                              },
+                                                              {
+                                                                "id": 374,
+                                                                "question": "What are the advantages of using passive voice:",
+                                                                "answer": "Emphasizes the action"
+                                                              },
+                                                              {
+                                                                "id": 375,
+                                                                "question": "When the subject of a sentence performs the action of the verb:",
+                                                                "answer": "The sentence is active"
+                                                              },
+                                                              {
+                                                                "id": 376,
+                                                                "question": "As one of the most neglected aspects of English language teaching is:",
+                                                                "answer": "Vocabulary"
+                                                              },
+                                                              {
+                                                                "id": 377,
+                                                                "question": "The manner in which speech sounds, especially connected sequences are articulated by individual speakers or by speakers generally, is a definition of:",
+                                                                "answer": "Pronunciation"
+                                                              },
+                                                              {
+                                                                "id": 378,
+                                                                "question": "What alphabet was used to teach phonetics:",
+                                                                "answer": "International Phonetic Alphabet"
+                                                              },
+                                                              {
+                                                                "id": 379,
+                                                                "question": "Guidelines that can be followed in the teaching of pronunciation are:",
+                                                                "answer": "Recognition practice should precede production practice"
+                                                              },
+                                                              {
+                                                                "id": 380,
+                                                                "question": "Acoustic phonetics focuses on:",
+                                                                "answer": "The physical properties of the sounds of language"
+                                                              },
+                                                              {
+                                                                "id": 381,
+                                                                "question": "Auditory phonetics focuses on:",
+                                                                "answer": "How listeners perceive the sounds of language"
+                                                              },
+                                                              {
+                                                                "id": 382,
+                                                                "question": "Articulatory phonetics focuses on:",
+                                                                "answer": "How the vocal tract produces the sounds of language"
+                                                              },
+                                                              {
+                                                                "id": 383,
+                                                                "question": "When was the IPA invented:",
+                                                                "answer": "1888"
+                                                              },
+                                                              {
+                                                                "id": 384,
+                                                                "question": "Voiceless sounds are:",
+                                                                "answer": "Those produced with the vocal cords apart so the air flows freely through the glottis"
+                                                              },
+                                                              {
+                                                                "id": 385,
+                                                                "question": "Oral sounds are:",
+                                                                "answer": "Those produced with the velum raised to prevent air from escaping out the nose"
+                                                              }                                                                                                                                                            
+    ]
+};
+
+const searchBox = document.getElementById("search");
+const resultsDiv = document.getElementById("results");
+const countDiv = document.getElementById("count");
+
+function renderResults(items) {
+
+    countDiv.textContent = `${items.length} risultati trovati`;
+
+    resultsDiv.innerHTML = items.map(item => `
+        <div class="result">
+            <div class="question">${item.id}. ${item.question}</div>
+            <div class="answer">
+                <strong>Risposta:</strong> ${item.answer}
+            </div>
+        </div>
+    `).join('');
+
+}
+
+renderResults(questionsData.questions);
+
+searchBox.addEventListener("input", () => {
+
+    const keyword = searchBox.value.toLowerCase().trim();
+
+    const filtered = questionsData.questions.filter(q =>
+        q.question.toLowerCase().includes(keyword)
+    );
+
+    renderResults(filtered);
+
+});
+
+</script>
+
+</body>
+</html>
